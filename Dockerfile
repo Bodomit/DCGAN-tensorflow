@@ -1,5 +1,9 @@
 # Beta tensorflow... RIP
-FROM tensorflow/tensorflow:0.12.1-py3
+FROM tensorflow/tensorflow:0.12.1-gpu-py3
+
+# Fix for CV2
+RUN apt-get update && \
+    apt-get install -y libsm6 libxext6 libxrender-dev
 
 # Dataset and results paths.
 ENV datasets /datasets
