@@ -67,7 +67,7 @@ def main(_):
   if not os.path.exists(FLAGS.sample_dir): os.makedirs(FLAGS.sample_dir)
 
   with open(os.path.join(FLAGS.out_dir, 'FLAGS.json'), 'w') as f:
-    flags_dict = {k:FLAGS[k].value for k in FLAGS}
+    flags_dict = flags_dict = {k:flags.FLAGS.__flags[k] for k in flags.FLAGS.__flags}
     json.dump(flags_dict, f, indent=4, sort_keys=True, ensure_ascii=False)
   
 
