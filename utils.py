@@ -54,7 +54,7 @@ def imread(path, grayscale = False):
     img_bgr = cv2.imread(path)
     # Reference: https://stackoverflow.com/a/15074748/
     img_rgb = img_bgr[..., ::-1]
-    return img_rgb.astype(np.float)
+    return img_rgb.astype(np.uint8)
 
 def merge_images(images, size):
   return inverse_transform(images)
@@ -92,17 +92,21 @@ def center_crop(x, crop_h, crop_w,
   j = int(round((h - crop_h)/2.))
   i = int(round((w - crop_w)/2.))
   im = Image.fromarray(x[j:j+crop_h, i:i+crop_w])
-  return np.array(im.resize([resize_h, resize_w]), PIL.Image.BILINEAR)
+  return im
 
 def transform(image, input_height, input_width, 
               resize_height=64, resize_width=64, crop=True):
+  
+  # Crop if necessary.
   if crop:
-    cropped_image = center_crop(
+    image = center_crop(
       image, input_height, input_width, 
       resize_height, resize_width)
   else:
-    im = Image.fromarray(image[j:j+crop_h, i:i+crop_w])
-  return np.array(im.resize([resize_h, resize_w]), PIL.Image.BILINEAR)/127.5 - 1.
+    image = Image.fromarray(image)
+
+  # Resize  
+  return np.array(image.resize([resize_height, resize_width], Image.BILINEAR))/127.5 - 1.
 
 def inverse_transform(images):
   return (images+1.)/2.
