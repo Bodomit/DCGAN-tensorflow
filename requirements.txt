@@ -1,0 +1,7 @@
+tensorflow-gpu==0.12.1
+scipy
+numpy
+six
+tqdm
+Pillow
+moviepy
