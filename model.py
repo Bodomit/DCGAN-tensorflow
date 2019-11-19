@@ -308,7 +308,7 @@ class DCGAN(object):
               }
             )
             save_images(samples, image_manifold_size(samples.shape[0]),
-                  './{}/train_{:08d}.png'.format(config.sample_dir, counter))
+                  '{}/train_{:08d}.png'.format(config.sample_dir, counter))
             print("[Sample] d_loss: %.8f, g_loss: %.8f" % (d_loss, g_loss)) 
           else:
             try:
@@ -320,10 +320,10 @@ class DCGAN(object):
                 },
               )
               save_images(samples, image_manifold_size(samples.shape[0]),
-                    './{}/train_{:08d}.png'.format(config.sample_dir, counter))
+                    '{}/train_{:08d}.png'.format(config.sample_dir, counter))
               print("[Sample] d_loss: %.8f, g_loss: %.8f" % (d_loss, g_loss)) 
-            except:
-              print("one pic error!...")
+            except Exception as ex:
+              print("one pic error!...", ex)
 
         if np.mod(counter, config.ckpt_freq) == 0:
           self.save(config.checkpoint_dir, counter)
